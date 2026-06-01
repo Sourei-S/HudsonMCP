@@ -3,6 +3,9 @@ name = "hudson-mcp"
 version = "0.1.0"
 description = "Post-incident recovery decision engine for Claude Code"
 license = { text = "MIT" }
+authors = [
+    { name = "Takayuki_Suzuki", email = "snow.falconine@gmail.com" },
+]
 requires-python = ">=3.12"
 dependencies = [
     "mcp>=1.2.0",
@@ -13,7 +16,7 @@ dependencies = [
 hudson-mcp = "hudson_mcp.server:main"
 
 [project.urls]
-Repository = "https://github.com/OWNER/hudson-mcp"
+Repository = "https://github.com/Sourei-S/hudson-mcp"
 
 [build-system]
 requires = ["hatchling"]
