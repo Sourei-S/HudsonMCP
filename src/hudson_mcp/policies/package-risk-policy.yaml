@@ -1,0 +1,21 @@
+known_packages:            # typosquatting 比較用の正規パッケージ名
+  - react
+  - lodash
+  - express
+  - next
+  - axios
+  - chalk
+  - debug
+  - requests
+  - numpy
+  - pandas
+suspicious_name_patterns:   # 実在の短名パッケージ(ts/fs/qs 等)を誤検知しないよう短名規則は持たない
+  - "(?i)test[_-]?package"
+postinstall_keys: [postinstall, preinstall, install]
+network_indicators:
+  - "curl "
+  - "wget "
+  - "https://"
+  - "nc "
+  - "/dev/tcp/"
+typosquat_max_distance: 1   # 既知パッケージとの編集距離がこれ以下なら疑い

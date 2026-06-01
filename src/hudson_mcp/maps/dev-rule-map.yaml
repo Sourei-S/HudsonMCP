@@ -1,0 +1,45 @@
+rules:
+  - id: DEV-R001
+    name: 既存テスト破壊禁止
+    incident_types: [test_regression, build_failure]   # build_failure もテスト健全性/復旧可能性を脅かす
+    related_purposes: [DEV-P001, DEV-P003, DEV-P005]
+  - id: DEV-R002
+    name: 目的外ファイル変更禁止
+    incident_types: [scope_expansion, unexpected_file_change, implementation_succeeded_but_scope_expanded]
+    related_purposes: [DEV-P002, DEV-P005]
+  - id: DEV-R003
+    name: 公開API破壊禁止
+    incident_types: [api_break, typecheck_failure, test_passed_but_spec_lost]
+    related_purposes: [DEV-P003, DEV-P006]
+  - id: DEV-R004
+    name: 秘密情報混入禁止
+    incident_types: [secret_exposure, secret_propagation]
+    related_purposes: [DEV-P006, DEV-P008]
+  - id: DEV-R005
+    name: 場当たり修正禁止
+    incident_types: [repeated_failure, error_suppression, error_suppressed_without_root_cause]
+    related_purposes: [DEV-P004, DEV-P007, DEV-P012]
+  - id: DEV-R006
+    name: 秘密情報読み取り検知
+    incident_types: [secret_access]
+    related_purposes: [DEV-P006, DEV-P008]
+  - id: DEV-R007
+    name: 秘密情報伝播禁止
+    incident_types: [secret_propagation]
+    related_purposes: [DEV-P006, DEV-P008]
+  - id: DEV-R008
+    name: 危険パッケージ導入後の通常作業継続禁止
+    incident_types: [malicious_package_installed, suspicious_dependency_installed, supply_chain_compromise]
+    related_purposes: [DEV-P006, DEV-P009, DEV-P010, DEV-P011]
+  - id: DEV-R009
+    name: postinstall実行後の影響確認
+    incident_types: [postinstall_script_executed]
+    related_purposes: [DEV-P009, DEV-P010, DEV-P011]
+  - id: DEV-R010
+    name: lockfile汚染確認
+    incident_types: [lockfile_poisoning]
+    related_purposes: [DEV-P005, DEV-P009, DEV-P011]
+  - id: DEV-R011
+    name: ルール通りだが価値喪失検知
+    incident_types: [rule_followed_but_value_lost, procedure_followed_but_quality_degraded, test_passed_but_spec_lost, error_suppressed_without_root_cause, implementation_succeeded_but_scope_expanded]
+    related_purposes: [DEV-P003, DEV-P007, DEV-P012]

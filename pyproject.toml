@@ -1,0 +1,23 @@
+[project]
+name = "hudson-mcp"
+version = "0.1.0"
+description = "Post-incident recovery decision engine for Claude Code"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+dependencies = [
+    "mcp>=1.2.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+hudson-mcp = "hudson_mcp.server:main"
+
+[project.urls]
+Repository = "https://github.com/OWNER/hudson-mcp"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hudson_mcp"]

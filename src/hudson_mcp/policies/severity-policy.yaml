@@ -1,0 +1,3 @@
+# severity は各検知器が文脈に応じて設定する（型→固定値の静的マップより精度が高い）。
+# ここでは severity の順序関係（最大値選択・ランク比較）のみ定義する。
+order: [low, medium, high, critical]

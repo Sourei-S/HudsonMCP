@@ -1,0 +1,14 @@
+hierarchy:
+  - {priority: 1,  name: 秘密情報保護}
+  - {priority: 2,  name: 環境隔離}
+  - {priority: 3,  name: データ保全}
+  - {priority: 4,  name: 復旧可能性}
+  - {priority: 5,  name: 仕様遵守}
+  - {priority: 6,  name: テスト健全性}
+  - {priority: 7,  name: 影響範囲の限定}
+  - {priority: 8,  name: サプライチェーン安全性}
+  - {priority: 9,  name: 証跡保全}
+  - {priority: 10, name: 根本原因の保持}
+  - {priority: 11, name: 保守性}
+  - {priority: 12, name: 効率}
+  - {priority: 13, name: 当初手順遵守}

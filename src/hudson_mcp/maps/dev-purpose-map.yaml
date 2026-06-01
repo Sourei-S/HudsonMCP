@@ -1,0 +1,73 @@
+purposes:
+  - id: DEV-P001
+    name: テスト健全性
+    value: テスト健全性
+    threat_signals: [test_failed, recent_change_caused_failure]
+    protects: ["既存機能の保証", "回帰不具合の検出", "変更の信頼性"]
+    prevents: ["見えない仕様破壊", "リリース後障害"]
+  - id: DEV-P002
+    name: 影響範囲の限定
+    value: 影響範囲の限定
+    threat_signals: [scope_expansion_detected]
+    protects: ["変更範囲の予測可能性", "レビュー容易性", "副作用の抑制"]
+    prevents: ["無関係な機能破壊", "レビュー不能な巨大差分", "原因追跡不能"]
+  - id: DEV-P003
+    name: 仕様遵守
+    value: 仕様遵守
+    threat_signals: [api_break_detected, value_loss_detected, spec_change_needed, api_compat_risk]
+    protects: ["ユーザー要求", "既存仕様", "公開インターフェース"]
+    prevents: ["要求と違う実装", "互換性破壊", "利用者影響"]
+  - id: DEV-P004
+    name: 根本原因の保持
+    value: 根本原因の保持
+    threat_signals: [repeated_failure_detected]
+    protects: ["原因に基づく修正", "再発防止", "保守性"]
+    prevents: ["エラー隠し", "症状だけの修正", "技術的負債の増加"]
+  - id: DEV-P005
+    name: 復旧可能性
+    value: 復旧可能性
+    threat_signals: [recoverability_unknown, unrecoverable_change_detected, lockfile_poisoned]
+    protects: ["変更前へ戻せる状態", "差分の把握", "安全な試行錯誤"]
+    prevents: ["復旧不能な破壊", "変更履歴喪失"]
+  - id: DEV-P006
+    name: セキュリティ
+    value: 秘密情報保護
+    threat_signals: [secret_possibly_read, secret_exposed, secret_propagated, dangerous_package_present]
+    protects: ["秘密情報", "認証・認可", "利用者データ"]
+    prevents: ["情報漏洩", "権限昇格", "脆弱性混入"]
+  - id: DEV-P007
+    name: 保守性
+    value: 保守性
+    threat_signals: [value_loss_detected]
+    protects: ["読みやすさ", "変更容易性", "構造の一貫性"]
+    prevents: ["複雑化", "局所最適なパッチ", "将来の修正困難"]
+  - id: DEV-P008
+    name: 秘密情報の非認知化
+    value: 秘密情報保護
+    threat_signals: [secret_possibly_read, secret_propagated]
+    protects: ["APIキー", "トークン", "認証情報", "秘密鍵", "接続文字列"]
+    prevents: ["AIコンテキストへの秘密情報混入", "ログへの秘密情報残存", "後続出力への漏洩", "外部送信リスク"]
+  - id: DEV-P009
+    name: サプライチェーン安全性
+    value: サプライチェーン安全性
+    threat_signals: [dangerous_package_present, postinstall_executed, lockfile_poisoned, unexpected_network_activity]
+    protects: ["依存関係の信頼性", "ビルド環境", "CI/CD環境", "開発端末"]
+    prevents: ["悪意ある依存関係の混入", "postinstallによる任意コード実行", "lockfile汚染", "依存関係経由の情報漏洩"]
+  - id: DEV-P010
+    name: 環境隔離
+    value: 環境隔離
+    threat_signals: [postinstall_executed, unexpected_network_activity, dangerous_package_present]
+    protects: ["ローカル環境", "WSL環境", "社内ネットワーク", "CI環境"]
+    prevents: ["被害拡大", "横展開", "認証情報の流出", "再感染"]
+  - id: DEV-P011
+    name: 証跡保全
+    value: 証跡保全
+    threat_signals: [dangerous_package_present, lockfile_poisoned, postinstall_executed]
+    protects: ["インストール履歴", "lockfile差分", "実行ログ", "通信・変更の痕跡"]
+    prevents: ["原因不明化", "復旧不能", "影響範囲不明"]
+  - id: DEV-P012
+    name: 価値喪失の検知
+    value: 保守性
+    threat_signals: [value_loss_detected]
+    protects: ["ルールの背後にある目的", "手順では守りきれない品質", "暗黙の仕様意図"]
+    prevents: ["ルール通りの失敗", "表面上成功した破壊", "目的を失った実装"]

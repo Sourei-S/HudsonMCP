@@ -1,0 +1,71 @@
+# 安全ゲート: これらのシグナルのいずれかで最優先 stop。
+# 「復旧可能性が不明」は recoverability_unknown が stop 句(rank1)として作用（ここには含めない）。
+safety_signals: [secret_possibly_read, secret_exposed, secret_propagated, dangerous_package_present, postinstall_executed]
+decisions:
+  stop:
+    safety_rank: 1
+    protects: [秘密情報保護, 環境隔離, 復旧可能性, 証跡保全, サプライチェーン安全性]
+    next_actions:
+      - 秘密値を出力・保存・要約しない（<REDACTED> 扱い）
+      - 通常作業を停止し被害拡大を止める
+      - 証跡（lockfile差分・実行ログ）を保全する
+      - 必要ならキーのローテーション/依存の除去を検討
+    when:
+      - {label: "秘密情報を読み取った可能性がある", any: [secret_possibly_read]}
+      - {label: "秘密情報が露出・伝播した", any: [secret_exposed, secret_propagated]}
+      - {label: "危険パッケージが入った", any: [dangerous_package_present]}
+      - {label: "postinstallで任意コード実行の可能性", any: [postinstall_executed]}
+      - {label: "続行すると被害が拡大する", any: [damage_spreads_if_continue]}
+      - {label: "復旧可能性が不明", any: [recoverability_unknown]}
+  pause_and_ask:
+    safety_rank: 2
+    protects: [仕様遵守, 復旧可能性]
+    next_actions:
+      - 人間に判断を仰ぐ（仕様変更/互換性/依存の扱い）
+      - 衝突点と選択肢を提示する
+    when:
+      - {label: "仕様変更判断が必要", any: [spec_change_needed]}
+      - {label: "API互換性を壊す可能性", any: [api_compat_risk]}
+      - {label: "要求と既存仕様が衝突", any: [requirement_spec_conflict]}
+      - {label: "危険依存の扱いに人間判断が必要", all: [dangerous_package_present, needs_human_judgment]}
+  rollback:
+    safety_rank: 3
+    protects: [復旧可能性, データ保全, テスト健全性, 仕様遵守]
+    next_actions:
+      - 直前変更を変更前状態へ戻す
+      - 戻した上で原因を分析する
+    when:   # 単独 revertable では発火させない（harm シグナル × revertable の AND）
+      - {label: "直前変更が原因でテスト/ビルドが壊れ戻せる", all: [recent_change_caused_failure, revertable]}
+      - {label: "危険依存/lockfile変更を戻せる", all: [dependency_change_present, revertable]}
+      - {label: "現在状態が価値を損ない戻せる", all: [current_state_harms_value, revertable]}
+  safe_alternative:
+    safety_rank: 4
+    protects: [仕様遵守, 保守性, 影響範囲の限定, 根本原因の保持]
+    next_actions:
+      - より小さく安全な代替案へ切り替える
+      - 仕様意図を満たす最小変更を設計する
+    when:
+      - {label: "現在の実装方針が破壊的", any: [current_approach_destructive]}
+      - {label: "より小さな変更で目的達成可能", any: [smaller_change_possible]}
+      - {label: "続けると被害が残る", any: [continue_leaves_damage]}
+      - {label: "ルール通りだが価値を損なう", any: [value_loss_detected]}
+  document_only:
+    safety_rank: 5
+    protects: [証跡保全, 復旧可能性]
+    next_actions:
+      - 実行せず観測事実のみ記録する
+      - 証跡を保全し判断材料を集める
+    when:
+      - {label: "実行権限がない", any: [no_execution_permission]}
+      - {label: "環境依存で検証できない", any: [env_dependent_unverifiable]}
+      - {label: "判断材料が不足", any: [insufficient_evidence]}
+      - {label: "まず証跡保全が必要", any: [evidence_preservation_first]}
+  continue_limited:
+    safety_rank: 6
+    protects: [効率, 当初手順遵守]
+    next_actions:
+      - 影響範囲を広げず原因分析のみ行う
+      - 追加変更・外部送信・依存導入はしない
+    when:
+      - {label: "影響範囲が限定でき安全継続可", all: [scope_limited, safe_limited_continuation_possible]}
+      - {label: "追加変更なしで原因分析できる", any: [can_analyze_without_changes]}

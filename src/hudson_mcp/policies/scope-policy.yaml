@@ -1,0 +1,2 @@
+large_diff_files: 10        # 変更ファイル数がこれ以上なら scope_expansion 疑い
+large_diff_lines: 500       # 変更行数がこれ以上なら scope_expansion 疑い

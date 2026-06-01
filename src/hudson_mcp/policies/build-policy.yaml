@@ -1,0 +1,14 @@
+# 誤検知しやすい "error" を含む良性句。これらだけで構成される行は build_failure と見なさない。
+benign_error_phrases:
+  - "error handling"
+  - "error message"
+  - "error log"
+  - "on error"
+  - "catch error"
+  - "handle error"
+  - "log error"
+  - "print error"
+  - "display error"
+  - "error boundary"
+  - "error callback"
+  - "error event"

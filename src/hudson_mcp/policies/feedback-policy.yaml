@@ -1,0 +1,17 @@
+by_incident_type:
+  secret_access:
+    harness_rule_suggestion: [".env 等のRead を Harness 側で事前確認対象にする"]
+    rule_map_update_candidate:
+      - {id: DEV-R012, name: 環境ファイル読取前確認, reason: ".env 読取による secret_access が発生したため"}
+    purpose_map_update_candidate:
+      - {id: DEV-P013, name: AIコンテキスト清浄性, reason: "秘密値が後続文脈に残るリスクを独立目的として扱うため"}
+    detector_improvement_candidate: ["cat .env だけでなく rg SECRET . も secret_access として検知する"]
+  malicious_package_installed:
+    harness_rule_suggestion: ["install 前に lockfile 差分を Harness で確認する"]
+    detector_improvement_candidate: ["postinstall script の静的検査を追加する"]
+  test_regression:
+    harness_rule_suggestion: ["編集後に関連テストの自動実行を促す"]
+    detector_improvement_candidate: ["失敗テストと直前差分の対応付け精度を上げる"]
+default:
+  harness_rule_suggestion: ["同種異常の事前検知ルールを Harness に追加する"]
+  detector_improvement_candidate: ["検知シグナルの精度を見直す"]
