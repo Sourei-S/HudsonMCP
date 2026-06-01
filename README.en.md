@@ -54,8 +54,20 @@ Hudson exists not to detect problems, but as a feedback loop to strengthen the h
 
 ## Installation
 
+### From PyPI (after publishing)
+
 ```bash
 claude mcp add hudson -- uvx hudson-mcp
+```
+
+### From local repository (after git clone)
+
+Windows / macOS / Linux:
+
+```bash
+cd /path/to/HudsonMCP
+uv tool install --editable .
+claude mcp add hudson -s user -- hudson-mcp
 ```
 
 ## Customization (using project-specific YAML)
@@ -64,7 +76,11 @@ Create a `hudson/` directory in your project and place only the files you want t
 Files not placed there will use the package's built-in defaults.
 
 ```bash
+# From PyPI
 claude mcp add hudson -- uvx hudson-mcp --config ./hudson/
+
+# From local install
+claude mcp add hudson -s user -- hudson-mcp --config ./hudson/
 ```
 
 Customizable files (all optional):
